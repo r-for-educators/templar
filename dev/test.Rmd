@@ -1,0 +1,34 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(glue)
+source("../R/versions.R")
+versions(pull_solutions = TRUE)
+```
+
+## R Markdown
+
+Find the mean of the vector `a`
+
+```{r, version = "A"}
+set.seed(123)
+```
+
+```{r, version = "B"}
+set.seed(456)
+```
+
+```{r}
+a <- rnorm(10)
+```
+
+
+```{r soln1, version = "solution"}
+mean(a)
+```
+
