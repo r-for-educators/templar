@@ -1,17 +1,26 @@
 ---
-title: "Untitled"
+title: "Example"
 output: html_document
 ---
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(glue)
-source("../R/versions.R")
-versions()
+templar::versions()
 ```
 
-## R Markdown
+%%%
+version: A
+
+You are taking **Exam A**
+%%%
+
+%%%
+version: B
+
+You are taking **Exam B**
+%%%
+
+## Question 1: Means
 
 Find the mean of the vector `a`
 
@@ -27,21 +36,10 @@ set.seed(456)
 a <- rnorm(10)
 ```
 
-%%%
-version: A
-
-The median is `r median(a)`
-%%%
 
 %%%
-version: B
+version: solution
 
-The median is `r median(a)`
+The mean is `r mean(a)`
 %%%
-
-
-
-```{r soln1, version = "solution"}
-mean(a)
-```
 

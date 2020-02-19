@@ -5,9 +5,8 @@ Authors@R:
     person(given = "Kelly",
            family = "Bodwin",
            role = c("aut", "cre"),
-           email = "kelly@bodwin.us"
-Description: Provides full package and individual R Markdown templates for 
-commonly created documents, such as course materials.
+           email = "kelly@bodwin.us")
+Description: Provides full package and individual R Markdown templates for commonly created documents, such as course materials.
 License: GPL-3
 Suggests: 
     testthat
@@ -15,3 +14,10 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
+Imports: 
+    dplyr,
+    stringr,
+    glue,
+    knitr,
+    rmarkdown,
+    purrr
