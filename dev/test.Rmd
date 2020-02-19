@@ -8,18 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 templar::versions()
 ```
 
-%%%
-version: A
-
-You are taking **Exam A**
-%%%
-
-%%%
-version: B
-
-You are taking **Exam B**
-%%%
-
 ## Question 1: Means
 
 Find the mean of the vector `a`

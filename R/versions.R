@@ -130,12 +130,14 @@ versions <- function(pull_solutions = TRUE, to_knit = NULL) {
 
       sol_name <- glue::glue("{v}-solution")
 
-      all_info[[sol_name]] <- all_info[[v]] || all_info[["solution"]]
+      all_info[[sol_name]] <- all_info[[v]] | all_info[["solution"]]
 
     }
 
+    browser()
+
     all_info <- all_info %>%
-      select(-solution)
+      dplyr::select(-solution)
 
     to_knit <- setdiff(names(all_info), always_col_names)
 
