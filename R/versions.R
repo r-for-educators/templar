@@ -26,20 +26,25 @@ versions <- function(pull_solutions = TRUE, to_knit = NULL) {
 
   # Pull out chunk label info pertaining to versions
 
-  v_info <- get_version_info(orig_text)
+  chunk_info <- get_version_chunks(orig_text)
+  sec_info <- get_version_text(orig_text)
 
-  always_col_names <- c("chunk_starts", "chunk_ends", "is_versioned")
+  all_info <- full_join(chunk_info, sec_info) %>%
+    mutate_all(~replace_na(.,FALSE))
+
+
+  always_col_names <- c("starts", "ends", "is_versioned")
 
 
   # In case we only want to knit a few of the versions
 
   if (!is.null(to_knit)) {
 
-    v_info <- v_info[, c(always_col_names, to_knit)]
+    all_info <- all_info[, c(always_col_names, to_knit)]
 
   } else {
 
-    to_knit <- setdiff(names(v_info), always_col_names)
+    to_knit <- setdiff(names(all_info), always_col_names)
 
   }
 
@@ -53,33 +58,50 @@ versions <- function(pull_solutions = TRUE, to_knit = NULL) {
 
       sol_name <- paste(v, "solution", sep = "-")
 
-      v_info[[sol_name]] <- v_info[[v]] | v_info[["solution"]]
+      all_info[[sol_name]] <- all_info[[v]] || all_info[["solution"]]
 
     }
 
-    v_info <- v_info %>%
+    all_info <- all_info %>%
       select(-solution)
 
-    to_knit <- setdiff(names(v_info), always_col_names)
+    to_knit <- setdiff(names(all_info), always_col_names)
 
   }
 
+  lines_to_delete <- c()
 
   for (v in to_knit) {
 
     temp = orig_text
 
-    delete_me <- v_info$is_versioned & !v_info[,v]
+    # Remove sections/chunks from other versions
+
+    delete_me <- all_info$is_versioned & !all_info[,v]
 
     if (any(delete_me)) {
 
-      lines_to_delete <- v_info[delete_me,c("chunk_starts", "chunk_ends")] %>%
+      lines_to_delete <- all_info[delete_me, c("starts", "ends")] %>%
         pmap( ~.x:.y) %>%
         unlist()
 
-      temp = temp[-lines_to_delete]
+    }
+
+
+    # Remove version labels on text sections
+
+    if (nrow(sec_info) > 0) {
+
+      lines_to_delete <- unique(c(lines_to_delete,
+                           sec_info$starts,
+                           sec_info$starts + 1,
+                           sec_info$ends))
 
     }
+
+    temp = temp[-lines_to_delete]
+
+    print(temp)
 
     # later: remove version options from doc
 
@@ -99,13 +121,13 @@ versions <- function(pull_solutions = TRUE, to_knit = NULL) {
 }
 
 
-get_version_info <- function(source_text) {
+get_version_chunks <- function(source_text) {
 
 
   chunk_info <- data.frame(
 
-    chunk_starts = source_text %>% str_which("```\\{"),
-    chunk_ends = source_text %>% str_which("```$"),
+    starts = source_text %>% str_which("```\\{"),
+    ends = source_text %>% str_which("```$"),
     is_versioned = source_text %>%
       str_subset("```\\{") %>%
       str_detect("version\\s*=")
@@ -138,3 +160,40 @@ get_version_info <- function(source_text) {
   return(chunk_info)
 
 }
+
+
+
+get_version_text <- function(source_text) {
+
+  secs <- source_text %>% str_which("%%%")
+
+  if (length(secs) == 0) return(NULL)
+
+  sec_info <- data.frame(
+    starts = secs[c(TRUE, FALSE)],
+    ends = secs[c(FALSE, TRUE)]
+  )
+
+  sec_info$is_versioned = str_detect(source_text[sec_info$starts + 1], "version")
+
+  version_opts <- source_text[sec_info$starts + 1] %>%
+    str_extract("(?<=version:).*") %>%
+    str_split(",") %>%
+    map(str_trim)
+
+  all_versions <- version_opts %>% unlist() %>% unique()
+
+
+  for (v in all_versions) {
+
+    sec_info[!sec_info$is_versioned, v] <- TRUE
+    sec_info[sec_info$is_versioned, v] <- version_opts %>% map_lgl(~any(str_detect(.x, v)))
+
+  }
+
+  return(sec_info)
+
+}
+
+
+
