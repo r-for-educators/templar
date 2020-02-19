@@ -20,4 +20,6 @@ Imports:
     glue,
     knitr,
     rmarkdown,
-    purrr
+    purrr,
+    magrittr,
+    tidyr
