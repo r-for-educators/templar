@@ -1,11 +1,11 @@
 ---
-title: "Untitled"
+title: "Example"
 output: html_document
 ---
 
 
 
-## R Markdown
+## Question 1: Means
 
 Find the mean of the vector `a`
 
@@ -24,26 +24,25 @@ set.seed(456)
 a <- rnorm(10)
 ```
 
-%%%
-version: A
-
-The median is 0.4118913
-%%%
 
 %%%
-version: B
+version: solution
 
-The median is 0.4118913
+The mean is -0.1321048
+%%%
+
+%%%
+version: solution-A
+
+oh hello solutions A
 %%%
 
 
 
+%%%
+version: none
 
-```r
-mean(a)
-```
+Note to self: make a version C
+%%%
 
-```
-## [1] 0.01735963
-```
 

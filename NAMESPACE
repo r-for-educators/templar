@@ -2,6 +2,7 @@
 
 export("%>%")
 export(versions)
+import(stringr)
 importFrom(magrittr,"%>%")
 importFrom(stringr,str_detect)
 importFrom(stringr,str_extract)

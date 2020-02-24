@@ -4,14 +4,25 @@
 \alias{versions}
 \title{Knit different versions of a file from chunk and section options}
 \usage{
-versions(pull_solutions = TRUE, to_knit = NULL)
+versions(
+  pull_solutions = TRUE,
+  global_eval = TRUE,
+  to_knit = NULL,
+  folders = NULL
+)
 }
 \arguments{
-\item{pull_solutions}{Logical - should we create separate solution files for
+\item{pull_solutions}{Logical. Should we create separate solution files for
 each version of the document?}
+
+\item{global_eval}{Logical. Should we replaces the global \code{eval = FALSE} option
+with \code{TRUE} in the individual versions?}
 
 \item{to_knit}{Character vector specifying which versions to write and knit
 into separate files.  If not specified, all versions are produced.}
+
+\item{folders}{List of versions and subfolder to put them in. Use pattern
+\code{version_name = folder_name}.  Default is each version in its own folder.}
 }
 \value{
 none
@@ -77,6 +88,12 @@ a <- rnorm(10)
 version: solution
 
 The mean is `r mean(a)`
+\%\%\%
+
+\%\%\%
+version: none
+
+Note to self: make a version C later.
 \%\%\%
 
 }

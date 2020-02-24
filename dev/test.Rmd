@@ -4,11 +4,17 @@ output: html_document
 ---
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-templar::versions()
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+templar::versions(folders = list(A = "Version A", B = "Version B",
+                               solution_A = "Solutions", solution_B = "Solutions"))
 ```
 
 ## Question 1: Means
+
+```{r, eval = TRUE}
+knitr::current_input()
+```
+
 
 Find the mean of the vector `a`
 
@@ -20,10 +26,26 @@ set.seed(123)
 set.seed(456)
 ```
 
+```{r, version = c("A", "B")}
+42
+```
+
 ```{r}
 a <- rnorm(10)
 ```
 
+```{r, eval = TRUE, version = "none"}
+# placeholder
+a <- 1
+```
+
+`r mean(a)`
+
+%%%
+version: A
+
+Take the mean yo
+%%%
 
 %%%
 version: solution
@@ -31,3 +53,27 @@ version: solution
 The mean is `r mean(a)`
 %%%
 
+%%%
+version: solution_A
+
+oh hello solutions A
+%%%
+
+%%%
+version: solution_A, solution_B
+
+lol solutions
+%%%
+
+
+
+%%%
+version: none
+
+Note to self: make a version C
+%%%
+
+
+I needed a test image so here it is
+
+![](./karl_moustache.jpg)
