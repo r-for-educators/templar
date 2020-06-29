@@ -7,3 +7,6 @@
 ^dev$
 ^figure$
 ^test.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
