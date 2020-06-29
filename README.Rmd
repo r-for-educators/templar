@@ -13,44 +13,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-# templar
+# `templar`
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/templar)](https://CRAN.R-project.org/package=templar)
 <!-- badges: end -->
 
-The goal of templar is to ...
+The goal of templar is to act as an engine of templating and autogeneration for common documents with RMarkdown.
 
 ## Installation
 
-You can install the released version of templar from [CRAN](https://CRAN.R-project.org) with:
+You can install `templar` from [GitHub](https://github.com/kbodwin/templar) with:
 
 ``` r
-install.packages("templar")
+remotes::install_github("kbodwin/templar")
 ```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(templar)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

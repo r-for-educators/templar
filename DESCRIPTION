@@ -1,19 +1,23 @@
 Package: templar
-Title: Easy templating and autogeneration for course materials and more.
+Title: Easy templating and autogeneration for course materials and more
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Kelly",
+    c(person(given = "Kelly",
            family = "Bodwin",
            role = c("aut", "cre"),
-           email = "kelly@bodwin.us")
+           email = "kelly@bodwin.us"),
+    person(given = "Ian",
+           family = "Flores Siaca",
+           role = c("aut"),
+           email = "iflores.siaca@gmail.com"))
 Description: Provides full package and individual R Markdown templates for commonly created documents, such as course materials.
-License: GPL-3
+License: GPL-3 + file LICENSE
 Suggests: 
     testthat
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Imports: 
     dplyr,
     stringr,
