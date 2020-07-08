@@ -5,8 +5,7 @@
 #' files for several versions of a document, such as different exams in a course.
 #'
 #'
-#' @param global_eval Logical. Should we replaces the global \code{eval = FALSE} option
-#' with \code{TRUE} in the individual versions?
+#' @param global_eval Logical.
 #' @param to_knit Character vector specifying which versions to write and knit
 #' into separate files.  If not specified, all versions are produced.
 #' @param folders List of versions and subfolder to put them in. Use pattern
@@ -80,33 +79,44 @@
 #' \%\%\%
 #'
 #' }
-#' @import stringr
 #' @export
 versions <- function(global_eval = TRUE,
-                     to_knit = NULL, folders = NULL) {
+                     to_knit = NULL,
+                     folders = NULL) {
 
-  if (!isTRUE(getOption('knitr.in.progress'))) return()
+  if (!isTRUE(getOption('knitr.in.progress'))){
+    return()
+  }
 
   orig_file <- knitr::current_input(dir = TRUE)
-  orig_dir <- orig_file %>% str_remove("[^\\/]*\\.Rmd")
-  orig_name <- orig_file %>% str_extract("[^\\/]*\\.Rmd")
+  orig_dir <- orig_file %>% stringr::str_remove("[^\\/]*\\.Rmd")
+  orig_name <- orig_file %>% stringr::str_extract("[^\\/]*\\.Rmd")
 
   orig_text <- readLines(orig_file)
 
-  orig_text <- prep_orig_text(orig_text, orig_file, global_eval)
+  orig_text <- prep_orig_text(orig_text, global_eval)
 
   orig_opts <- knitr::opts_chunk$get()
 
-  if (global_eval) knitr::opts_chunk$set(eval = TRUE)
-
+  if (global_eval){
+    knitr::opts_chunk$set(eval = TRUE)
+  }
 
   # Pull out chunk label info pertaining to versions
 
   chunk_info <- get_version_chunks(orig_text)
+
   sec_info <- get_version_text(orig_text)
 
-  all_info <- dplyr::full_join(chunk_info, sec_info) %>%
-    dplyr::mutate_all(~tidyr::replace_na(.,FALSE))
+  # This condition is to support when people don't submit %%% sections
+
+  if (!is.null(sec_info)){
+    all_info <- dplyr::full_join(chunk_info, sec_info) %>%
+      dplyr::mutate_all(~tidyr::replace_na(.,FALSE))
+  } else {
+    all_info <- chunk_info %>%
+      dplyr::mutate_all(~tidyr::replace_na(.,FALSE))
+  }
 
   not_versions <- c("starts", "ends", "is_versioned", "none")
 
@@ -123,27 +133,15 @@ versions <- function(global_eval = TRUE,
 
   }
 
+  # Handles the absence of solution code chunks
 
   if (is.null(all_info[["solution"]])) {
     all_info[["solution"]] <- FALSE
   }
 
-  to_knit <- str_subset(to_knit, "solution", negate = TRUE)
+  to_knit <- stringr::str_subset(to_knit, "solution", negate = TRUE)
 
-  for (v in to_knit) {
-
-    sol_name <- glue::glue("solution_{v}")
-
-    if (is.null(all_info[[sol_name]])) {
-      all_info[[sol_name]] <- FALSE
-    }
-
-    all_info[[sol_name]] <-
-      all_info[[v]] |
-      all_info[["solution"]] |
-      all_info[[sol_name]]
-
-  }
+  all_info <- purrr::map_df(to_knit, get_solution_chunks, all_info)
 
   all_info <- all_info %>%
     dplyr::select(-"solution")
@@ -152,80 +150,7 @@ versions <- function(global_eval = TRUE,
 
   # Write and knit file for each version
 
-  for (v in to_knit) {
-
-    temp = orig_text
-
-    # Remove sections/chunks from other versions
-
-    delete_me <- all_info$is_versioned & !all_info[,v]
-
-    lines_to_delete <- c()
-
-    if (any(delete_me)) {
-
-      lines_to_delete <- c(lines_to_delete,
-                           all_info[delete_me, c("starts", "ends")] %>%
-                              purrr::pmap( ~.x:.y) %>%
-                              unlist())
-
-    }
-
-
-    # Remove version labels on text sections
-
-    if (nrow(sec_info) > 0) {
-
-      lines_to_delete <- c(lines_to_delete,
-                           sec_info$starts,
-                           sec_info$starts + 1,
-                           sec_info$ends)
-
-    }
-
-    # Get rid of duplicate white space
-
-    where_blank <- which(!str_detect(temp, "\\S"))
-
-    dump_em <- (where_blank + 1) %in% where_blank
-
-    lines_to_delete <- c(lines_to_delete, where_blank[dump_em])
-
-
-    # Drop everything
-    temp <- temp[-unique(lines_to_delete)]
-
-    # Erase chunk labels
-    temp <- temp %>%
-      str_remove(",?\\s*version\\s*=\\s*c\\([^\\)]*\\)") %>%
-      str_remove(",?\\s*version\\s*=\\s*[^\\s,\\}]*")
-
-
-    new_name <- paste0(str_remove(orig_name, ".Rmd"),
-                       glue::glue("_{v}.Rmd"))
-
-    if (is.null(folders[[v]])) folders[[v]] <- v
-
-    fol_name <- paste0(orig_dir, folders[[v]], "/")
-
-    if (!dir.exists(fol_name)) { dir.create(fol_name) }
-
-    new_name <- paste0(fol_name, new_name)
-
-    options(knitr.duplicate.label = 'allow')
-
-    # Fix relative file references
-
-    temp <-
-      temp %>%
-      str_replace_all(fixed("./"), orig_dir)
-
-    writeLines(temp, new_name)
-
-    rmarkdown::render(new_name, envir = new.env())
-
-  }
-
+  purrr::map(to_knit, write_version, orig_name, orig_dir, orig_text, sec_info, all_info, folders)
 
   knitr::opts_chunk$set(orig_opts)
 

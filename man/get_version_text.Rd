@@ -3,6 +3,7 @@
 \name{get_version_text}
 \alias{get_version_text}
 \title{Gets version tag information from text
+This function extracts the sections \%\%\%
 Helper for \code{version()}}
 \usage{
 get_version_text(source_text)
@@ -10,7 +11,11 @@ get_version_text(source_text)
 \arguments{
 \item{source_text}{input text}
 }
+\value{
+Versioned sections
+}
 \description{
 Gets version tag information from text
+This function extracts the sections \%\%\%
 Helper for \code{version()}
 }

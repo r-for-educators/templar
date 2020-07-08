@@ -7,8 +7,7 @@
 versions(global_eval = TRUE, to_knit = NULL, folders = NULL)
 }
 \arguments{
-\item{global_eval}{Logical. Should we replaces the global \code{eval = FALSE} option
-with \code{TRUE} in the individual versions?}
+\item{global_eval}{Logical.}
 
 \item{to_knit}{Character vector specifying which versions to write and knit
 into separate files.  If not specified, all versions are produced.}

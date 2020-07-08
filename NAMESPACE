@@ -2,12 +2,4 @@
 
 export("%>%")
 export(versions)
-import(stringr)
 importFrom(magrittr,"%>%")
-importFrom(stringr,str_detect)
-importFrom(stringr,str_extract)
-importFrom(stringr,str_extract_all)
-importFrom(stringr,str_split)
-importFrom(stringr,str_subset)
-importFrom(stringr,str_trim)
-importFrom(stringr,str_which)

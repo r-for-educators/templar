@@ -28,3 +28,4 @@ Imports:
     magrittr,
     tidyr,
     here
+VignetteBuilder: knitr
