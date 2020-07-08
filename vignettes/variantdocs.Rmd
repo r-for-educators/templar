@@ -1,0 +1,74 @@
+---
+title: "Variant Docs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{variantdocs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Templar Set Up
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+templar::versions(folders = list(A = "Version A", B = "Version B",
+                               solution_A = "Solutions", solution_B = "Solutions"))
+```
+
+## Code Chunks
+
+If you want
+
+\```{r, version = "A"}
+<br>
+set.seed(123)
+<br>
+\```
+
+\```{r, version = "B"}
+<br>
+set.seed(456)
+<br>
+\```
+
+```{r, version = c("A", "B")}
+42
+```
+
+```{r}
+a <- rnorm(10)
+```
+
+## Text Sections
+
+%%%
+version: A
+
+Take the mean yo
+%%%
+
+%%%
+version: solution
+
+The mean is mean(a)
+%%%
+
+%%%
+version: solution_A
+
+oh hello solutions A
+%%%
+
+%%%
+version: solution_A, solution_B
+
+lol solutions
+%%%

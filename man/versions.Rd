@@ -4,19 +4,10 @@
 \alias{versions}
 \title{Knit different versions of a file from chunk and section options}
 \usage{
-versions(
-  pull_solutions = TRUE,
-  global_eval = TRUE,
-  to_knit = NULL,
-  folders = NULL
-)
+versions(global_eval = TRUE, to_knit = NULL, folders = NULL)
 }
 \arguments{
-\item{pull_solutions}{Logical. Should we create separate solution files for
-each version of the document?}
-
-\item{global_eval}{Logical. Should we replaces the global \code{eval = FALSE} option
-with \code{TRUE} in the individual versions?}
+\item{global_eval}{Logical.}
 
 \item{to_knit}{Character vector specifying which versions to write and knit
 into separate files.  If not specified, all versions are produced.}
@@ -37,7 +28,7 @@ Code chunks may be tagged as version-specific using the option \code{version}.
 Text sections may also be tagged as version-specific using \code{\%\%\%} wrappers.
 See example Rmd source below.
 
-The version label \code{"solution"} is special if \code{pull_solutions = TRUE},
+The version label \code{"solution"} is special,
 as it is combined with the other version labels to make a solution set.
 
 The version label \code{"none"} is special; it will be ignored in the creation
@@ -80,12 +71,12 @@ set.seed(123)
 set.seed(456)
 ```
 
-```{r}
+```{r, version = "A"}
 a <- rnorm(10)
 ```
 
 \%\%\%
-version: solution
+version: A
 
 The mean is `r mean(a)`
 \%\%\%

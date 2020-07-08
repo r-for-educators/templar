@@ -77,3 +77,13 @@ Note to self: make a version C
 I needed a test image so here it is
 
 ![](./karl_moustache.jpg)
+```{r, eval=TRUE}
+getwd()
+```
+
+```{r}
+
+orig_file <- knitr::current_input(dir = TRUE)
+orig_txt <- readLines(orig_file)
+saveRDS(orig_txt, file = './test_txt.RDS')
+```
