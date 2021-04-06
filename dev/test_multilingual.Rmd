@@ -1,0 +1,90 @@
+---
+title: "Example"
+output: html_document
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+templar::versions_multilingual(to_jupyter = FALSE)
+```
+
+## Question 1: Means
+
+```{r, eval = TRUE}
+knitr::current_input()
+```
+
+
+Find the mean of the vector `a`
+
+```{r}
+a <- 1:10
+mean(a)
+```
+
+```{r, version = "python"}
+library(reticulate)
+```
+
+```{python}
+#mean([1:10])
+```
+
+```{r, eval = TRUE, version = "none"}
+# placeholder
+a <- 1
+```
+
+%%%
+version: r
+
+Take the mean using R
+%%%
+
+%%%
+version: python
+
+oooh anaconda
+%%%
+
+%%%
+version: solution
+
+This is correct for both R and python.
+%%%
+
+%%%
+version: solution_r
+
+this is correct for only R
+%%%
+
+%%%
+version: solution_python
+
+this is correct for only python
+%%%
+
+
+
+%%%
+version: none
+
+Note to self: R is better
+%%%
+
+
+I needed a test image so here it is
+
+![](./karl_moustache.jpg)
+```{r, eval=FALSE}
+getwd()
+```
+
+```{r, eval = FALSE}
+
+orig_file <- knitr::current_input(dir = TRUE)
+orig_txt <- readLines(orig_file)
+writeLines(orig_txt, "./test_txt_multilingual.txt")
+saveRDS(orig_txt, file = './test_txt_multilingual.RDS')
+```

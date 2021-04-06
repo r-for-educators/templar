@@ -1,0 +1,133 @@
+#'
+#' @details
+#'
+#' Code chunks may be tagged as version-specific using the option \code{version}.
+#' Text sections may also be tagged as version-specific using \code{%%%} wrappers.
+#' See example Rmd source below.
+#'
+#' The version label \code{"solution"} is special,
+#' as it is combined with the other version labels to make a solution set.
+#'
+#' The version label \code{"none"} is special; it will be ignored in the creation
+#' of the child documents.  Use it to leave yourself notes in the original document.
+#'
+#' Example R Markdown source:
+#'
+#' \preformatted{
+#' ---
+#' title: "Example"
+#' output: html_document
+#' ---
+#'
+#' ```{r, include=FALSE}
+#' knitr::opts_chunk$set(echo = TRUE)
+#' templar::versions()
+#' ```
+#'
+#' \%\%\%
+#' version: A
+#'
+#' You are taking **Exam A**
+#' \%\%\%
+#'
+#' \%\%\%
+#' version: B
+#'
+#' You are taking **Exam B**
+#' \%\%\%
+#'
+#' ## Question 1: Means
+#'
+#' Find the mean of the vector a
+#'
+#' ```{r, version = "A"}
+#' set.seed(123)
+#' ```
+#'
+#' ```{r, version = "B"}
+#' set.seed(456)
+#' ```
+#'
+#' ```{r, version = "A"}
+#' a <- rnorm(10)
+#' ```
+#'
+#' \%\%\%
+#' version: A
+#'
+#' The mean is 5.5
+#' \%\%\%
+#'
+#' \%\%\%
+#' version: none
+#'
+#' Note to self: make a version C later.
+#' \%\%\%
+#'
+#' }
+
+
+
+
+#'
+#' @details
+#'
+#' Code chunks may be tagged as version-specific using the option \code{version}.
+#' Text sections may also be tagged as version-specific using \code{%%%} wrappers.
+#' See example Rmd source below.
+#'
+#' The version label \code{"solution"} is special,
+#' as it is combined with the other version labels to make a solution set.
+#'
+#' The version label \code{"none"} is special; it will be ignored in the creation
+#' of the child documents.  Use it to leave yourself notes in the original document.
+#'
+#' Chunks with no version label will be labelled by their engine.  Use the \code{"none"}
+#' label to override this behavior.
+#'
+#' Example R Markdown source:
+#'
+#' \preformatted{
+#' ---
+#' title: "Example"
+#' output: html_document
+#' ---
+#'
+#' ```{r, include=FALSE}
+#' knitr::opts_chunk$set(echo = TRUE)
+#' templar::versions_multilingual()
+#' ```
+#'
+#' \%\%\%
+#' version: r
+#'
+#' Let's code in R!
+#' \%\%\%
+#'
+#' \%\%\%
+#' version: python
+#'
+#' Let's code in python!
+#' \%\%\%
+#'
+#' ## Question 1: Means
+#'
+#' Find the mean of the vector a
+#'
+#' ```{r}
+#' a <- 1:10
+#' mean(a)
+#' ```
+#'
+#' ```{r, version = "python"}
+#' library(reticulate)
+#' ```
+#'
+#' ```{python}
+#' a = [1:10]
+#' mean(a)
+#' ```
+#'
+
+#'
+#' }

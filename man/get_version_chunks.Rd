@@ -6,10 +6,13 @@
 This function extracts the chunks ```
 Helper for \code{version()}}
 \usage{
-get_version_chunks(source_text)
+get_version_chunks(source_text, engine_to_version = FALSE)
 }
 \arguments{
 \item{source_text}{input text}
+
+\item{engine_to_version}{Should un-versioned chunks inherit their engine as
+a version label (for multilingual versions)}
 }
 \value{
 Version tags from chunks

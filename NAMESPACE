@@ -2,4 +2,5 @@
 
 export("%>%")
 export(versions)
+export(versions_multilingual)
 importFrom(magrittr,"%>%")

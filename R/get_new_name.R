@@ -9,7 +9,7 @@
 
 get_new_name <- function(v, orig_name, orig_dir, folders){
   new_name <- paste0(stringr::str_remove(orig_name, ".Rmd"),
-                     glue::glue("_{v}.Rmd"))
+                     glue::glue("-{v}.Rmd"))
 
   if (is.null(folders[[v]])) folders[[v]] <- v
 

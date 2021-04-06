@@ -13,7 +13,7 @@ version_cleaner <- function(v, orig_text, sec_info, all_info, orig_dir){
 
   temp <- orig_text
 
-  delete_me <- all_info$is_versioned & !all_info[,v]
+  delete_me <- !all_info[,v]
 
   lines_to_delete <- c()
 
@@ -29,7 +29,7 @@ version_cleaner <- function(v, orig_text, sec_info, all_info, orig_dir){
 
   # Remove version labels on text sections
 
-  if (nrow(sec_info) > 0) {
+  if (!is.null(sec_info) && nrow(sec_info) > 0) {
 
     lines_to_delete <- c(lines_to_delete,
                          sec_info$starts,

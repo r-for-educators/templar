@@ -40,7 +40,7 @@ a <- rnorm(10)
 
 I needed a test image so here it is
 
-![](/Users/spareaccount/Documents/internship/templar/dev/karl_moustache.jpg)
+![](C:/Users/kbodwin/Dropbox/templar/dev/karl_moustache.jpg)
 ```{r, eval=TRUE}
 getwd()
 ```
@@ -49,5 +49,5 @@ getwd()
 
 orig_file <- knitr::current_input(dir = TRUE)
 orig_txt <- readLines(orig_file)
-saveRDS(orig_txt, file = '/Users/spareaccount/Documents/internship/templar/dev/test_txt.RDS')
+saveRDS(orig_txt, file = 'C:/Users/kbodwin/Dropbox/templar/dev/test_txt.RDS')
 ```

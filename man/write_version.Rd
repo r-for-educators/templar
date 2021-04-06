@@ -4,7 +4,16 @@
 \alias{write_version}
 \title{Function to write the different versions.}
 \usage{
-write_version(v, orig_name, orig_dir, orig_text, sec_info, all_info, folders)
+write_version(
+  v,
+  orig_name,
+  orig_dir,
+  orig_text,
+  sec_info,
+  all_info,
+  folders,
+  to_jupyter = FALSE
+)
 }
 \arguments{
 \item{v}{Version list}
@@ -20,6 +29,8 @@ write_version(v, orig_name, orig_dir, orig_text, sec_info, all_info, folders)
 \item{all_info}{All chunks info}
 
 \item{folders}{Folders to store the new generated files}
+
+\item{to_jupyter}{Should we generate an ipynb copy?}
 }
 \value{
 Doesn't return anything, but generates the new RMD files.
