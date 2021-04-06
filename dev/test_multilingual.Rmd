@@ -5,7 +5,7 @@ output: html_document
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
-templar::versions_multilingual(to_jupyter = FALSE)
+templar::versions_multilingual(to_jupyter = TRUE)
 ```
 
 ## Question 1: Means
