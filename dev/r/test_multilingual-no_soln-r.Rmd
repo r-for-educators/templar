@@ -11,9 +11,6 @@ knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 
 ## Question 1: Means
 
-```{r, eval = TRUE}
-knitr::current_input()
-```
 
 Find the mean of the vector `a`
 
@@ -27,9 +24,6 @@ mean(a)
 
 
 Take the mean using R
-
-
-
 
 
 

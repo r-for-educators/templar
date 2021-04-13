@@ -10,7 +10,7 @@ templar::versions_multilingual(to_jupyter = TRUE)
 
 ## Question 1: Means
 
-```{r, eval = TRUE}
+```{r, eval = TRUE, version = "none"}
 knitr::current_input()
 ```
 
@@ -36,7 +36,7 @@ a <- 1
 ```
 
 %%%
-version: R
+version: r
 
 Take the mean using R
 %%%
@@ -45,24 +45,6 @@ Take the mean using R
 version: python
 
 oooh anaconda
-%%%
-
-%%%
-version: solution
-
-This is correct for both R and python.
-%%%
-
-%%%
-version: solution_R
-
-this is correct for only R
-%%%
-
-%%%
-version: solution_python
-
-this is correct for only python
 %%%
 
 

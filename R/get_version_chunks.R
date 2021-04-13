@@ -6,6 +6,9 @@
 #' @param engine_to_version Should un-versioned chunks inherit their engine as
 #' a version label (for multilingual versions)
 #'
+#' @import stringr
+#' @importFrom purrr map map_int
+#'
 #' @return Version tags from chunks
 
 
