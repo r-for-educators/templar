@@ -2,9 +2,9 @@
 
 export("%>%")
 export(insert_yaml_jupyter)
-export(quarto_multilingual)
 export(versions)
 export(versions_multilingual)
+export(versions_quarto_multilingual)
 import(stringr)
 importFrom(magrittr,"%>%")
 importFrom(purrr,map)

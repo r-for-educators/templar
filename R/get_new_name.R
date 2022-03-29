@@ -31,7 +31,7 @@ get_new_name <- function(v, orig_name, orig_dir, folders){
 #'
 #' @return New file name
 
-get_new_name <- function(v, orig_name, orig_dir, folders){
+get_new_name_quarto <- function(v, orig_name, orig_dir, folders){
   new_name <- paste0(stringr::str_remove(orig_name, ".qmd"),
                      glue::glue("-{v}.qmd"))
 

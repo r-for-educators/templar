@@ -31,6 +31,8 @@ write_version_quarto(
 \item{folders}{Folders to store the new generated files}
 
 \item{to_jupyter}{Should we generate an ipynb copy?}
+
+\item{global_eval}{Should eval option be set back to TRUE?}
 }
 \value{
 Doesn't return anything, but generates the new RMD files.

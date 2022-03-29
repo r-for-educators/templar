@@ -10,7 +10,7 @@
 prep_orig_text <- function(orig_text, eval_orig = TRUE) {
 
   # Remove lines that call templar::versions()
-  start_call <- orig_text %>% stringr::str_which("versions(_multilingual)?\\(")
+  start_call <- orig_text %>% stringr::str_which("versions(_quarto)?(_multilingual)?\\(")
 
   end_call <- which(orig_text == "" | orig_text == "```")
   end_call <- min(end_call[end_call > start_call])

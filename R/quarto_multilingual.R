@@ -1,21 +1,23 @@
 #' Knit different versions of a file from chunk and section options
 #'
-#' \code{quarto_multilingual} is a function that should be included in the setup chunk of
+#' \code{versions_quarto_multilingual} is a function that should be included in the setup chunk of
 #' a Quarto document.  Its purpose is to write multiple Quarto source
 #' files for several versions of a document, specifically when multiple languages
-#' are being used for different versions.
+#' are being used for different versions. Python versions must contain the word "python".
 #'
 #' @param to_knit Character vector specifying which versions to write and knit
 #' into separate files.  If not specified, all versions are produced.
 #' @param folders List of versions and subfolder to put them in. Use pattern
 #' \code{version_name = folder_name}.  Default is each version in its own folder.
+#' @param global_eval Reset global eval to TRUE?  (parent file sets it to FALSE)
 #' @param to_jupyter Should a .ipynb document be generated from the python version?
 #'
 #' @returns none
 #'
 #' @export
-quarto_multilingual <- function(to_knit = NULL,
+versions_quarto_multilingual <- function(to_knit = NULL,
                                 folders = NULL,
+                                global_eval = TRUE,
                                 to_jupyter = FALSE) {
 
   if (!isTRUE(getOption('knitr.in.progress'))){
@@ -29,13 +31,9 @@ quarto_multilingual <- function(to_knit = NULL,
 
   orig_text <- readLines(orig_file)
 
-  orig_text <- prep_orig_text(orig_text, global_eval)
+  orig_text <- prep_orig_text(orig_text, FALSE)
 
   orig_opts <- knitr::opts_chunk$get()
-
-  if (global_eval){
-    knitr::opts_chunk$set(eval = TRUE)
-  }
 
   # Pull out chunk label info pertaining to versions
 
@@ -89,11 +87,9 @@ quarto_multilingual <- function(to_knit = NULL,
 
   # Write and knit file for each version
 
-  purrr::map(to_knit, templar:::write_version_quarto, orig_name, orig_dir, orig_text, sec_info, all_info, folders, to_jupyter)
+  purrr::map(to_knit, templar:::write_version_quarto, orig_name, orig_dir, orig_text, sec_info, all_info, folders, global_eval, to_jupyter)
 
-  knitr::opts_chunk$set(orig_opts)
-
-
+  knitr::knit_exit()
 
 }
 
