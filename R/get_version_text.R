@@ -28,6 +28,8 @@ get_version_text <- function(source_text) {
 
   all_versions <- version_opts %>% unlist() %>% unique()
 
+  print(all_versions)
+
 
   for (v in all_versions) {
 

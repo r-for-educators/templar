@@ -3,11 +3,17 @@
 #' Helper for \code{version()}
 #'
 #' @param source_text input text
+#' @param engine_to_version Should un-versioned chunks inherit their engine as
+#' a version label (for multilingual versions)
+#'
+#' @import stringr
+#' @importFrom purrr map map_int
 #'
 #' @return Version tags from chunks
 
 
-get_version_chunks <- function(source_text) {
+get_version_chunks <- function(source_text,
+                               engine_to_version = FALSE) {
 
   starts <- source_text %>% stringr::str_which("```\\{")
   all_ends <- source_text %>% stringr::str_which("```$")
@@ -40,7 +46,21 @@ get_version_chunks <- function(source_text) {
     stringr::str_extract_all('\\"[^\\",]+\\"') %>%
     unlist()
 
-  all_versions <- unique(c(version_opts_sing, version_opts_mult))
+  if (engine_to_version) {
+
+    chunk_engines <- source_text %>%
+      stringr::str_subset("```\\{") %>%
+      stringr::str_extract_all("(?<=\\{)[A-z]+") %>%
+      unlist() %>%
+      paste0('"', . , '"')
+
+    all_versions <- unique(c(chunk_engines, version_opts_sing, version_opts_mult))
+
+  } else {
+
+    all_versions <- unique(c(version_opts_sing, version_opts_mult))
+
+  }
 
 
   for (v in all_versions) {
@@ -50,6 +70,15 @@ get_version_chunks <- function(source_text) {
     chunk_info[!chunk_info$is_versioned, col_name] <- TRUE
     chunk_info[chunk_info$is_versioned, col_name] <-
       purrr::map_lgl(version_opts,  ~any(stringr::str_detect(.x, stringr::fixed(v))))
+
+
+    # Drop all non-matching engines, unless pre-versioned
+    if (engine_to_version && v %in% chunk_engines) {
+
+      chunk_info[!chunk_info$is_versioned & chunk_engines != v, col_name] <- FALSE
+
+    }
+
   }
 
   return(chunk_info)

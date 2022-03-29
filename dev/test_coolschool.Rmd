@@ -1,0 +1,36 @@
+---
+title: "DATA 301"
+course_name: "Introduction to Data Science"
+department: Statistics
+instructor: 
+  name: "Kelly Bodwin"
+  office: "The Internet"
+  email: "kbodwin@calpoly.edu"
+  office_hours: "TBD"
+logistics:
+  classroom: "Online"
+  time: "(none)"
+  course_description: |
+    Yay Data Science 
+color:
+  primary: "#154734"
+  secondary: "#C69214"
+  links: "#F18C8E"
+image: https\://knowledge.wharton.upenn.edu/wp-content/uploads/2020/05/Women-in-data-science-1024x440.jpg
+footer:
+  title: My title
+  content: My footer content.
+output: coolschool::cool_school_syllabus
+---
+
+## Hi!
+
+Yay ds
+
+### Grades
+
+you will get them
+
+### Exams
+
+yep those too

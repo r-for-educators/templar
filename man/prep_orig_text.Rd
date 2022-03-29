@@ -5,12 +5,12 @@
 \title{Function to eliminate all calls to \code{versions()} and setup chunks
 #' Helper for \code{version()}}
 \usage{
-prep_orig_text(orig_text, global_eval = TRUE)
+prep_orig_text(orig_text, eval_orig = TRUE)
 }
 \arguments{
-\item{orig_text}{Text from the original RMd}
+\item{orig_text}{Text from the original Rmd}
 
-\item{global_eval}{If to execute the code chunks in the document or not}
+\item{eval_orig}{If to execute the code chunks in the document or not}
 }
 \value{
 Pre-processed text containing a cleaned-up RMd

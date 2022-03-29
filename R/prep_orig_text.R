@@ -1,27 +1,28 @@
 #' Function to eliminate all calls to \code{versions()} and setup chunks
 #' #' Helper for \code{version()}
 #'
-#' @param orig_text Text from the original RMd
-#' @param global_eval If to execute the code chunks in the document or not
+#' @param orig_text Text from the original Rmd
+#' @param eval_orig If to execute the code chunks in the document or not
 #'
 #' @return Pre-processed text containing a cleaned-up RMd
 #'
 
-prep_orig_text <- function(orig_text, global_eval = TRUE) {
+prep_orig_text <- function(orig_text, eval_orig = TRUE) {
 
   # Remove lines that call templar::versions()
-  start_call <- orig_text %>% stringr::str_which("versions\\(")
-  end_call <- which(orig_text == "" | orig_text == "```")
-  end_call <- min(end_call[end_call > start_call]) - 1
+  start_call <- orig_text %>% stringr::str_which("versions(_quarto)?(_multilingual)?\\(")
 
-  orig_text <- orig_text[-c(start_call:end_call)]
+  end_call <- which(orig_text == "" | orig_text == "```")
+  end_call <- min(end_call[end_call > start_call])
+
+  orig_text <- orig_text[-c((start_call-1):end_call)]
 
   # Fix global eval
   where_global <-
     orig_text %>%
     stringr::str_which(stringr::fixed("opts_chunk$set"))
 
-  if (global_eval & length(where_global) > 0) {
+  if (eval_orig & length(where_global) > 0) {
 
     orig_text[where_global] <- orig_text[where_global] %>%
       stringr::str_replace("eval\\s*=\\s*F(ALSE)?", "eval = TRUE")

@@ -1,0 +1,55 @@
+---
+title: "test"
+format: html
+editor: visual
+execute:
+  eval: false
+---
+
+
+```{r, eval = TRUE, version = "none"}
+templar::versions_quarto_multilingual()
+```
+
+
+The following chunk will set up your document.  Run it, then ignore it.
+
+
+```{r, version = "R"}
+#| include: false
+library(tidyverse)
+library(tidymodels)
+```
+
+
+```{python, version = "python"}
+#| include: false
+import pandas as pd
+```
+
+%%% 
+version: R
+
+If the system prompts you to install a package, or gives you a "package not found" error,
+simply run `install.packages("packagename")` once to install it.
+
+%%%
+
+%%% 
+version: python
+
+If you get a "[packagename] not installed" error, run `py_install("packagename")` in your **console**.
+
+%%%
+
+
+# The Dataset
+
+
+```{r, version = "R"}
+plot(1:10)
+```
+
+```{python, version = "python"}
+1+1
+```
