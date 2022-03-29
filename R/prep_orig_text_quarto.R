@@ -1,10 +1,10 @@
 #' Function to eliminate all calls to \code{versions()} and setup chunks
 #' #' Helper for \code{version()}
 #'
-#' @param orig_text Text from the original Rmd
+#' @param orig_text Text from the original Rmd/qmd
 #' @param eval_orig If to execute the code chunks in the document or not
 #'
-#' @return Pre-processed text containing a cleaned-up RMd
+#' @return Pre-processed text containing a cleaned-up Rmd/qmd
 #'
 
 prep_orig_text <- function(orig_text, eval_orig = TRUE) {

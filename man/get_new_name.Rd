@@ -5,6 +5,8 @@
 \title{Function to get new file names}
 \usage{
 get_new_name(v, orig_name, orig_dir, folders)
+
+get_new_name(v, orig_name, orig_dir, folders)
 }
 \arguments{
 \item{v}{Version list}
@@ -17,7 +19,11 @@ get_new_name(v, orig_name, orig_dir, folders)
 }
 \value{
 New file name
+
+New file name
 }
 \description{
 Function to get new file names
+
+Function to get new file names, Quarto version
 }
