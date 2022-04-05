@@ -8,7 +8,7 @@
 
 get_version_text <- function(source_text) {
 
-  secs <- source_text %>% stringr::str_which("%%%")
+  secs <- source_text %>% stringr::str_which("%%%.*")
 
   if (length(secs) == 0){
     return(NULL)
@@ -19,9 +19,9 @@ get_version_text <- function(source_text) {
     ends = secs[c(FALSE, TRUE)]
   )
 
-  sec_info$is_versioned = stringr::str_detect(source_text[sec_info$starts + 1], "version")
+  sec_info$is_versioned = stringr::str_detect(source_text[sec_info$starts], "version")
 
-  version_opts <- source_text[sec_info$starts + 1] %>%
+  version_opts <- source_text[sec_info$starts] %>%
     stringr::str_extract("(?<=version:).*") %>%
     stringr::str_split(",") %>%
     purrr::map(stringr::str_trim)
