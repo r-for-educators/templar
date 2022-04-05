@@ -11,6 +11,7 @@
 #' \code{version_name = folder_name}.  Default is each version in its own folder.
 #' @param global_eval Reset global eval to TRUE?  (parent file sets it to FALSE)
 #' @param to_jupyter Should a .ipynb document be generated from the python version?
+#' @param warn_edit Should a "don't edit this" message be added to the auto-created files?
 #'
 #' @returns none
 #'
@@ -18,7 +19,8 @@
 versions_quarto_multilingual <- function(to_knit = NULL,
                                 folders = NULL,
                                 global_eval = TRUE,
-                                to_jupyter = FALSE) {
+                                to_jupyter = FALSE,
+                                warn_edit = TRUE) {
 
   if (!isTRUE(getOption('knitr.in.progress'))){
     return()
@@ -31,7 +33,9 @@ versions_quarto_multilingual <- function(to_knit = NULL,
 
   orig_text <- readLines(orig_file)
 
-  orig_text <- prep_orig_text(orig_text, FALSE)
+  orig_text <- prep_orig_text(orig_text,
+                              eval_orig = FALSE,
+                              warn_edit)
 
   orig_opts <- knitr::opts_chunk$get()
 
@@ -89,7 +93,8 @@ versions_quarto_multilingual <- function(to_knit = NULL,
 
   purrr::map(to_knit, templar:::write_version_quarto, orig_name, orig_dir, orig_text, sec_info, all_info, folders, global_eval, to_jupyter)
 
-  knitr::knit_exit()
+  ## Deliberate error, so we don't render the original doc
+  stop("Quitting knitting process for parent document.")
 
 }
 

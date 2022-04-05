@@ -1,0 +1,83 @@
+---
+title: "Welcome to Quarto!"
+author: "YOUR NAME HERE"
+format: html
+editor: visual
+---
+
+```{r, version = "none"}
+templar::versions_quarto_multilingual(global_eval = FALSE, to_jupyter = TRUE, warn_edit = FALSE)
+```
+
+```{r, version = "R"}
+#| label: libraries-r
+#| include: false
+library(tidyverse)
+```
+
+```{python, version = "python"}
+#| label: libraries-py
+#| include: false
+import matplotlib.pyplot as plt
+```
+
+1.  Write the names of your group members below, as a bullet point list.
+
+2.  Find something that all of you enjoy for fun. Insert a related picture or meme below.
+
+%%% 
+version: R
+
+3.  Each of you, choose a favorite color from [this list](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf). Each of you share how comfortable you are with R on a scale of 1-10.
+
+Edit the code below so that it has your names and corresponding comfort levels. 
+
+%%%
+
+```{r, version = "R"}
+#| label: group_info-r
+group_data <- tibble(
+  names = c("Person 1", "Person 2", "Person 3", "Person 4"),
+  colors = c("goldenrod", "goldenrod", "goldenrod", "goldenrod"),
+  comfort = c(1, 3, 10, 5)
+)
+```
+
+%%% 
+version: python
+
+3.  Everyone decide your comfort level on a scale of 1-10 in python, and your favorite colors from [this](https://matplotlib.org/stable/gallery/color/named_colors.html) list.
+
+Edit the code below so that it has your names and corresponding comfort levels. 
+
+%%%
+
+```{python, version = "python"}
+#| label: group_info-py
+group_data = {
+  'names': ["Person 1", "Person 2", "Person 3", "Person 4"], 
+  'colors': ["goldenrod", "goldenrod", "goldenrod", "goldenrod"],
+  'comfort': [1, 3, 10, 5]
+  }
+```
+
+4.  Click "Render" and see the plot that is produced.
+
+(Do not edit the code chunk below!)
+
+```{r group_plot, version = "R"}
+#| label: plot-r
+#| fig-cap: "Our comfort levels with R"
+group_data %>%
+  ggplot(aes(x = names, y = comfort, fill = names)) +
+  geom_col() +
+  scale_fill_manual(values = group_data$colors)
+```
+
+```{python, version = "python"}
+#| label: plot-py
+#| fig-cap: "Our comfort levels with python"
+plt.bar(x = group_data['names'], height = group_data['comfort'], color = group_data['colors'])
+plt.ylabel("Comfort with python")
+plt.show()
+```
