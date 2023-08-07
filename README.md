@@ -18,14 +18,8 @@ autogeneration for common documents with RMarkdown.
 ## Installation
 
 You can install `templar` from
-[GitHub](https://github.com/kbodwin/templar) with:
+[GitHub](https://github.com/r-for-educators/templar) with:
 
 ``` r
-remotes::install_github("kbodwin/templar")
-```
-
-For dev
-
-``` r
-remotes::install_github("kbodwin/templar@ian_refactor")
+remotes::install_github("r-for-educators/templar")
 ```
